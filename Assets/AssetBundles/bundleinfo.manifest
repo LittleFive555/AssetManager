@@ -1,0 +1,21 @@
+ManifestFileVersion: 0
+CRC: 1262083073
+Hashes:
+  AssetFileHash:
+    serializedVersion: 2
+    Hash: f7269899cfdf0adabe06c7bc25bde76c
+  TypeTreeHash:
+    serializedVersion: 2
+    Hash: a00c290550149b6ae311fae5243d2737
+HashAppended: 0
+ClassTypes:
+- Class: 114
+  Script: {fileID: 11500000, guid: bbecbadcc0d566d42ba93be0fcc22c21, type: 3}
+- Class: 115
+  Script: {instanceID: 0}
+SerializeReferenceClassIdentifiers:
+- AssemblyName: Assembly-CSharp
+  ClassName: BundleInfo
+Assets:
+- Assets/BundlesInfo.asset
+Dependencies: []
