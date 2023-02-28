@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 
 public class AssetBundleDependencies
 {
@@ -13,6 +13,6 @@ public class AssetBundleDependencies
     {
         if (_dependencies == null)
             return null;
-        return _dependencies.TryGetValue(assetBundle.ToLower(), out var directDependencies) ? directDependencies : null;
+        return _dependencies.TryGetValue(assetBundle, out var directDependencies) ? directDependencies : null;
     }
 }

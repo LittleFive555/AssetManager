@@ -47,10 +47,22 @@ public class BundleAssetLoader : IAssetLoader
             Debug.Log("Failed to load AssetBundle!");
             return null;
         }
-        var allDependencies = AssetBundleDependencies.GetDirectDependencies(bundleName);
-        foreach (var dependency in allDependencies)
-            AssetBundle.LoadFromFile(Path.Combine(BundlePath, dependency));
+        RecursiveLoadDependencies(bundleName, 0);
         return loadedAssetBundle.LoadAsset<T>(path);
+    }
+
+    private void RecursiveLoadDependencies(string bundleName, int depth)
+    {
+        if (depth > 0)
+            AssetBundle.LoadFromFile(Path.Combine(BundlePath, bundleName));
+        depth++;
+
+        var allDependencies = AssetBundleDependencies.GetDirectDependencies(bundleName);
+        if (allDependencies != null && allDependencies.Count > 0)
+        {
+            foreach (var dependency in allDependencies)
+                RecursiveLoadDependencies(dependency, depth);
+        }
     }
 
     public T LoadAssetAsync<T>(string path) where T : UnityEngine.Object

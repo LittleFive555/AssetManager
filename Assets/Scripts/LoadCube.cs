@@ -7,5 +7,8 @@ public class LoadCube : MonoBehaviour
     {
         var obj = AssetManager.LoadAsset<GameObject>("Assets/Prefabs/Cube.prefab");
         Instantiate(obj);
+        var bundles = AssetBundle.GetAllLoadedAssetBundles();
+        foreach (var bundle in bundles)
+            Debug.Log(bundle.name);
     }
 }

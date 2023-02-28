@@ -13,11 +13,21 @@ MonoBehaviour:
   m_Name: BundlesInfo
   m_EditorClassIdentifier: 
   _bundlesInfo:
+  - Name: material
+    Assets:
+    - assets/material/new material.mat
+    Dependencies:
+    - texture
   - Name: prefab
     Assets:
     - assets/prefabs/cube.prefab
     Dependencies:
-    - texture
+    - prefab2
+  - Name: prefab2
+    Assets:
+    - assets/cube.prefab
+    Dependencies:
+    - material
   - Name: texture
     Assets:
     - assets/textures/texture1.png
