@@ -7,6 +7,7 @@ public struct BundleInfo
 {
     public string Name;
     public string[] Assets;
+    public string[] Dependencies;
 }
 
 public class BundlesInfoCollection : ScriptableObject
@@ -30,5 +31,13 @@ public class BundlesInfoCollection : ScriptableObject
                 assetToBundle.Add(asset, bundleInfo.Name);
         }
         return new AssetBundleMapping(assetToBundle);
+    }
+
+    public AssetBundleDependencies CreateAssetBundleDependencies()
+    {
+        Dictionary<string, IReadOnlyList<string>> assetToBundle = new Dictionary<string, IReadOnlyList<string>>();
+        foreach (var bundleInfo in _bundlesInfo)
+            assetToBundle.Add(bundleInfo.Name, new List<string>(bundleInfo.Dependencies));
+        return new AssetBundleDependencies(assetToBundle);
     }
 }

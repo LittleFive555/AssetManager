@@ -27,11 +27,17 @@ public class CreateAssetBundles
         foreach (var assetBundleName in manifest.GetAllAssetBundles())
         {
             var assetBundle = AssetBundle.LoadFromFile(Path.Combine(assetBundleDirectory, assetBundleName));
-            bundlesInfoCollection.AddBundleInfo(new BundleInfo() { Name = assetBundleName, Assets = assetBundle.GetAllAssetNames() }); // NOTE assetBundle.GetAllAssetNames()获得的名字全小写的
+            bundlesInfoCollection.AddBundleInfo(new BundleInfo() 
+            {
+                Name = assetBundleName,
+                Assets = assetBundle.GetAllAssetNames(), // NOTE assetBundle.GetAllAssetNames()获得的名字全小写的
+                Dependencies = manifest.GetDirectDependencies(assetBundleName)
+            });
             assetBundle.Unload(true);
         }
         var assetName = "Assets/BundlesInfo.asset";
         AssetDatabase.CreateAsset(bundlesInfoCollection, assetName);
+        AssetDatabase.SaveAssets();
         AssetBundleBuild bundlesInfoBuild = new AssetBundleBuild
         {
             assetBundleName = "bundleinfo",
