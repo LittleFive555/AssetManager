@@ -21,13 +21,15 @@ MonoBehaviour:
   - Name: prefab
     Assets:
     - assets/prefabs/cube.prefab
+    - assets/prefabs/cube3.prefab
     Dependencies:
     - prefab2
   - Name: prefab2
     Assets:
-    - assets/cube.prefab
+    - assets/cube2.prefab
     Dependencies:
     - material
+    - prefab
   - Name: texture
     Assets:
     - assets/textures/texture1.png

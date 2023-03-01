@@ -1,9 +1,9 @@
 ManifestFileVersion: 0
-CRC: 2681750867
+CRC: 3985180969
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: 274d2e8dda91ed8f814a34fd35ed4535
+    Hash: f16f5c757d0700ef4e4712bae2f74389
   TypeTreeHash:
     serializedVersion: 2
     Hash: 7d1e0093d0592ca7550333bbf0c8f406
@@ -25,6 +25,7 @@ ClassTypes:
   Script: {instanceID: 0}
 SerializeReferenceClassIdentifiers: []
 Assets:
-- Assets/Cube.prefab
+- Assets/Cube2.prefab
 Dependencies:
-- F:/UnityProject/AssetManager/Assets/AssetBundles/material
+- E:/AssetManager/Assets/AssetBundles/material
+- E:/AssetManager/Assets/AssetBundles/prefab

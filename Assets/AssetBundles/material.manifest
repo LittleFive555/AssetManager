@@ -3,7 +3,7 @@ CRC: 659196675
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: 3a7e456520c69ec808f6a54090b9896c
+    Hash: d0c4027efea32a4110cf2e7298f5f486
   TypeTreeHash:
     serializedVersion: 2
     Hash: 2ac4353984f9d013b83e89048e1ecdd0
@@ -19,4 +19,4 @@ SerializeReferenceClassIdentifiers: []
 Assets:
 - Assets/Material/New Material.mat
 Dependencies:
-- F:/UnityProject/AssetManager/Assets/AssetBundles/texture
+- E:/AssetManager/Assets/AssetBundles/texture
