@@ -6,6 +6,7 @@ public interface IAssetLoader
 
     public T LoadAssetAsync<T>(string path) where T : UnityEngine.Object;
 
+    public void UnloadAsset<T>(T asset) where T : UnityEngine.Object;
 }
 
 public class AssetManager
@@ -33,5 +34,10 @@ public class AssetManager
     public static T LoadAssetAsync<T>(string path) where T : UnityEngine.Object
     {
         return AssetLoader.LoadAssetAsync<T>(path);
+    }
+
+    public static void UnloadAsset<T>(T obj) where T : UnityEngine.Object
+    {
+        AssetLoader.UnloadAsset(obj);
     }
 }

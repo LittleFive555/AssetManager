@@ -14,6 +14,11 @@ public class DatabaseAssetLoader : IAssetLoader
     {
         return LoadAsset<T>(path);
     }
+
+    public void UnloadAsset<T>(T asset) where T : Object
+    {
+
+    }
 }
 
 #endif
