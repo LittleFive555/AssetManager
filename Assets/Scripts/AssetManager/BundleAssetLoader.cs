@@ -12,12 +12,8 @@ public class BundleAssetLoader : IAssetLoader
     {
         get
         {
-            if (_assetBundleMapping == null)
-            {
-                var infoBundle = AssetBundle.LoadFromFile(Path.Combine(BundlePath, BundleInfoName));
-                _assetBundleMapping = infoBundle.LoadAsset<BundlesInfoCollection>("BundlesInfo").CreateAssetBundleMapping();
-                infoBundle.Unload(false);
-            }
+            if (!_initialized)
+                Initialize();
             return _assetBundleMapping;
         }
     }
@@ -27,14 +23,22 @@ public class BundleAssetLoader : IAssetLoader
     {
         get
         {
-            if (_assetBundleDependencies == null)
-            {
-                var infoBundle = AssetBundle.LoadFromFile(Path.Combine(BundlePath, BundleInfoName));
-                _assetBundleDependencies = infoBundle.LoadAsset<BundlesInfoCollection>("BundlesInfo").CreateAssetBundleDependencies();
-                infoBundle.Unload(false);
-            }
+            if (!_initialized)
+                Initialize();
             return _assetBundleDependencies;
         }
+    }
+
+    private bool _initialized = false;
+
+    private void Initialize()
+    {
+        _initialized = true;
+
+        var infoBundle = AssetBundle.LoadFromFile(Path.Combine(BundlePath, BundleInfoName));
+        var bundlesInfoCollection = infoBundle.LoadAsset<BundlesInfoCollection>("BundlesInfo");
+        _assetBundleMapping = bundlesInfoCollection.CreateAssetBundleMapping();
+        _assetBundleDependencies = bundlesInfoCollection.CreateAssetBundleDependencies();
     }
 
     public T LoadAsset<T>(string path) where T : UnityEngine.Object
