@@ -7,6 +7,18 @@ public class LoadCube : MonoBehaviour
     [SerializeField]
     private KeyCode _key;
 
+    private void Start()
+    {
+        //StartCoroutine(AssetManager.LoadAssetAsync<GameObject>("Assets/Prefabs/Folder/Cube.prefab", (result) =>
+        //{
+        //    _obj = result;
+        //    Instantiate(_obj, transform);
+        //}));
+
+        //_obj = AssetManager.LoadAsset<GameObject>("Assets/Prefabs/Folder/Cube.prefab");
+        //Instantiate(_obj, transform);
+    }
+
     private void Update()
     {
         if (Input.GetKeyDown(KeyCode.L))

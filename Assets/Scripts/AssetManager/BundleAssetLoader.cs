@@ -34,6 +34,8 @@ public class BundleAssetLoader : IAssetLoader
 
     private Dictionary<string, LoadedBundle> _loadedBundles = new Dictionary<string, LoadedBundle>();
     private Dictionary<object, LoadedAsset> _loadedAssets = new Dictionary<object, LoadedAsset>();
+
+    private Dictionary<string, List<Action<AssetBundle>>> _bundleLoadCallbacks = new Dictionary<string, List<Action<AssetBundle>>>();
     private bool _initialized = false;
 
     private void Initialize()
@@ -69,11 +71,20 @@ public class BundleAssetLoader : IAssetLoader
 
         AssetBundle assetBundle = null;
         yield return LoadRelativeBundlesAsync(path, (bundle) => assetBundle = bundle);
+        Debug.LogFormat("Async load bundle cost time: {0}", Time.realtimeSinceStartup - startTime);
+        startTime = Time.realtimeSinceStartup;
+
         var request = assetBundle.LoadAssetAsync<T>(path);
         yield return request;
-        onComplete?.Invoke(request.asset as T);
+        var asset = request.asset as T;
+        if (!_loadedAssets.TryGetValue(asset, out var loadedAsset))
+            _loadedAssets.Add(asset, new LoadedAsset(asset, path));
+        else
+            loadedAsset.UseCount++;
+        onComplete?.Invoke(asset);
 
-        Debug.LogFormat("Async cost time: {0}", Time.realtimeSinceStartup - startTime);
+        Debug.LogFormat("Async load asset cost time: {0}", Time.realtimeSinceStartup - startTime);
+        LogCurrentAssetBundleStatus();
     }
 
     public void UnloadAsset<T>(T asset) where T : UnityEngine.Object
@@ -136,10 +147,38 @@ public class BundleAssetLoader : IAssetLoader
 
     private IEnumerator LoadAssetBundleAsync(string bundleName, Action<AssetBundle> onComplete)
     {
+        if (_loadedBundles.TryGetValue(bundleName, out var loadedBundle))
+        {
+            loadedBundle.UseCount++;
+            onComplete?.Invoke(loadedBundle.AssetBundle);
+            yield break;
+        }
+
+        if (_bundleLoadCallbacks.TryGetValue(bundleName, out var callbackList))
+        {
+            onComplete += (bundle) =>
+            {
+                if (_loadedBundles.TryGetValue(bundleName, out var loadedBundle))
+                    loadedBundle.UseCount++;
+                else
+                    _loadedBundles.Add(bundleName, new LoadedBundle(bundle));
+            };
+            callbackList.Add(onComplete);
+            yield break;
+        }
+
+        callbackList = new List<Action<AssetBundle>>();
+        callbackList.Add(onComplete);
+        _bundleLoadCallbacks[bundleName] = callbackList;
+
         var bundlePath = Path.Combine(BundlePath, bundleName);
         var request = AssetBundle.LoadFromFileAsync(bundlePath);
         yield return request;
-        onComplete?.Invoke(request.assetBundle);
+
+        _loadedBundles.Add(bundleName, new LoadedBundle(request.assetBundle));
+        foreach (var callback in _bundleLoadCallbacks[bundleName])
+            callback?.Invoke(request.assetBundle);
+        _bundleLoadCallbacks.Remove(bundleName);
     }
 
     private void UnloadRelativeBundle(string assetPath)
