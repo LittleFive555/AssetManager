@@ -1,3 +1,5 @@
+using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
@@ -44,8 +46,10 @@ public class BundleAssetLoader : IAssetLoader
         _assetBundleDependencies = bundlesInfoCollection.CreateAssetBundleDependencies();
     }
 
-    public T LoadAsset<T>(string path) where T : Object
+    public T LoadAsset<T>(string path) where T : UnityEngine.Object
     {
+        float startTime = Time.realtimeSinceStartup;
+
         AssetBundle assetBundle = LoadRelativeBundles(path);
         LogCurrentAssetBundleStatus();
 
@@ -54,15 +58,25 @@ public class BundleAssetLoader : IAssetLoader
             _loadedAssets.Add(asset, new LoadedAsset(asset, path));
         else
             loadedAsset.UseCount++;
+
+        Debug.LogFormat("Sync cost time: {0}", Time.realtimeSinceStartup - startTime);
         return asset;
     }
 
-    public T LoadAssetAsync<T>(string path) where T : Object
+    public IEnumerator LoadAssetAsync<T>(string path, Action<T> onComplete) where T : UnityEngine.Object
     {
-        return LoadAsset<T>(path);
+        float startTime = Time.realtimeSinceStartup;
+
+        AssetBundle assetBundle = null;
+        yield return LoadRelativeBundlesAsync(path, (bundle) => assetBundle = bundle);
+        var request = assetBundle.LoadAssetAsync<T>(path);
+        yield return request;
+        onComplete?.Invoke(request.asset as T);
+
+        Debug.LogFormat("Async cost time: {0}", Time.realtimeSinceStartup - startTime);
     }
 
-    public void UnloadAsset<T>(T asset) where T : Object
+    public void UnloadAsset<T>(T asset) where T : UnityEngine.Object
     {
         if (!_loadedAssets.TryGetValue(asset, out var loadedAsset))
         {
@@ -76,9 +90,9 @@ public class BundleAssetLoader : IAssetLoader
         LogCurrentAssetBundleStatus();
     }
 
-    private AssetBundle LoadRelativeBundles(string path)
+    private AssetBundle LoadRelativeBundles(string assetPath)
     {
-        var bundleName = AssetBundleMapping.GetBundleName(path);
+        var bundleName = AssetBundleMapping.GetBundleName(assetPath);
         AssetBundle assetBundle = LoadOrGetAssetBundle(bundleName);
         var allDependencies = AssetBundleDependencies.GetAllDependencies(bundleName);
         if (allDependencies != null && allDependencies.Count > 0)
@@ -106,6 +120,26 @@ public class BundleAssetLoader : IAssetLoader
         }
 
         return assetBundle;
+    }
+
+    private IEnumerator LoadRelativeBundlesAsync(string assetPath, Action<AssetBundle> onComplete)
+    {
+        var bundleName = AssetBundleMapping.GetBundleName(assetPath);
+        yield return LoadAssetBundleAsync(bundleName, onComplete);
+        var allDependencies = AssetBundleDependencies.GetAllDependencies(bundleName);
+        if (allDependencies != null && allDependencies.Count > 0)
+        {
+            foreach (var dependency in allDependencies)
+                yield return LoadAssetBundleAsync(dependency, null); // 依次加载，考虑是否可以添加一个同时加载
+        }
+    }
+
+    private IEnumerator LoadAssetBundleAsync(string bundleName, Action<AssetBundle> onComplete)
+    {
+        var bundlePath = Path.Combine(BundlePath, bundleName);
+        var request = AssetBundle.LoadFromFileAsync(bundlePath);
+        yield return request;
+        onComplete?.Invoke(request.assetBundle);
     }
 
     private void UnloadRelativeBundle(string assetPath)

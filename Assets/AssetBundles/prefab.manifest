@@ -1,5 +1,5 @@
 ManifestFileVersion: 0
-CRC: 1610848784
+CRC: 3626786964
 Hashes:
   AssetFileHash:
     serializedVersion: 2
@@ -26,6 +26,6 @@ ClassTypes:
 SerializeReferenceClassIdentifiers: []
 Assets:
 - Assets/Prefabs/Cube3.prefab
-- Assets/Prefabs/Cube.prefab
+- Assets/Prefabs/Folder/Cube.prefab
 Dependencies:
 - E:/AssetManager/Assets/AssetBundles/prefab2

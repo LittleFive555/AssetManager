@@ -20,8 +20,8 @@ MonoBehaviour:
     - texture
   - Name: prefab
     Assets:
-    - assets/prefabs/cube.prefab
     - assets/prefabs/cube3.prefab
+    - assets/prefabs/folder/cube.prefab
     Dependencies:
     - prefab2
   - Name: prefab2

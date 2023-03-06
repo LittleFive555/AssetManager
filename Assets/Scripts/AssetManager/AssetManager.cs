@@ -1,10 +1,11 @@
 using System;
+using System.Collections;
 
 public interface IAssetLoader
 {
     public T LoadAsset<T>(string path) where T : UnityEngine.Object;
 
-    public T LoadAssetAsync<T>(string path) where T : UnityEngine.Object;
+    public IEnumerator LoadAssetAsync<T>(string path, Action<T> onComplete) where T : UnityEngine.Object;
 
     public void UnloadAsset<T>(T asset) where T : UnityEngine.Object;
 }
@@ -31,9 +32,9 @@ public class AssetManager
         return AssetLoader.LoadAsset<T>(path);
     }
 
-    public static T LoadAssetAsync<T>(string path) where T : UnityEngine.Object
+    public static IEnumerator LoadAssetAsync<T>(string path, Action<T> onComplete) where T : UnityEngine.Object
     {
-        return AssetLoader.LoadAssetAsync<T>(path);
+        return AssetLoader.LoadAssetAsync<T>(path, onComplete);
     }
 
     public static void UnloadAsset<T>(T obj) where T : UnityEngine.Object
