@@ -19,7 +19,7 @@ public class AssetManager
         {
 #if UNITY_EDITOR
             if (_assetLoader == null)
-                _assetLoader = new BundleAssetLoader();
+                _assetLoader = new BundledAssetLoader();
 #endif
             if (_assetLoader == null)
                 throw new Exception();
