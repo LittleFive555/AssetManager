@@ -17,7 +17,7 @@ public class CreateAssetBundles
                                         BuildAssetBundleOptions.None,
                                         BuildTarget.StandaloneWindows);
 
-        CheckCircularDependenciesAndWarning(manifest);
+        CheckCircularDependenciesAndWarning(manifest); // TODO 应该在构建之前使用AssetDatabase的方法来检查是否有循环依赖，而不是在构建完成后
 
         AssetBundleBuild bundlesInfoBuild = CreateBundlesInfoBuild(assetBundleDirectory, manifest);
         BuildPipeline.BuildAssetBundles(assetBundleDirectory, new AssetBundleBuild[] { bundlesInfoBuild }, BuildAssetBundleOptions.None,

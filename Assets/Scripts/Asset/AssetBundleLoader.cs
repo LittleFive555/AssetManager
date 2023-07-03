@@ -51,7 +51,7 @@ public class AssetBundleLoader : IAssetBundleLoader
         if (allDependencies != null && allDependencies.Count > 0)
         {
             foreach (var dependency in allDependencies)
-                yield return LoadAssetBundleAsync(dependency, null); // 依次加载，考虑是否可以添加一个同时加载
+                yield return LoadAssetBundleAsync(dependency, null); // 这里依次加载所有的依赖，考虑是否可以同时加载所有的依赖？是否能更快？
         }
         LogCurrentAssetBundleStatus();
     }
