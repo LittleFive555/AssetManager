@@ -1,0 +1,3 @@
+[submodule "Assets/AssetManagerPackage"]
+	path = Assets/AssetManagerPackage
+	url = git@github.com:LittleFive555/AssetManagerPackage.git
