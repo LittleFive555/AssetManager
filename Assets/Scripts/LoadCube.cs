@@ -10,6 +10,8 @@ public class LoadCube : MonoBehaviour
 
     private void Start()
     {
+        AssetManager.UseAB = true;
+        AssetManager.Initialize();
         //StartCoroutine(AssetManager.LoadAssetAsync<GameObject>("Assets/Prefabs/Folder/Cube.prefab", (result) =>
         //{
         //    _obj = result;
