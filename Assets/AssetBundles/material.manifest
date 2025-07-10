@@ -1,12 +1,12 @@
 ManifestFileVersion: 0
-CRC: 659196675
+CRC: 3904644800
 Hashes:
   AssetFileHash:
     serializedVersion: 2
     Hash: d0c4027efea32a4110cf2e7298f5f486
   TypeTreeHash:
     serializedVersion: 2
-    Hash: 2ac4353984f9d013b83e89048e1ecdd0
+    Hash: 939e20ecac0e95a3f7c5cfb3e57acb1d
 HashAppended: 0
 ClassTypes:
 - Class: 21
@@ -19,4 +19,4 @@ SerializeReferenceClassIdentifiers: []
 Assets:
 - Assets/Material/New Material.mat
 Dependencies:
-- E:/AssetManager/Assets/AssetBundles/texture
+- E:/UnityProject/AssetManager/Assets/AssetBundles/texture

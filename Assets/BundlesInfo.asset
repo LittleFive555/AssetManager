@@ -29,7 +29,6 @@ MonoBehaviour:
     - assets/cube2.prefab
     Dependencies:
     - material
-    - prefab
   - Name: texture
     Assets:
     - assets/textures/texture1.png

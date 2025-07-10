@@ -1,12 +1,12 @@
 ManifestFileVersion: 0
-CRC: 3054717132
+CRC: 2758117619
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: dabb6691ee88efdb1801cb3bac2bdd51
+    Hash: b366ccb4d010290aebb00bc80ca7deb6
   TypeTreeHash:
     serializedVersion: 2
-    Hash: 4fc1b90855766a6d5e591d031a7e489d
+    Hash: 848be6430bffe9028562f02f06100dd2
 HashAppended: 0
 ClassTypes:
 - Class: 114
@@ -14,8 +14,8 @@ ClassTypes:
 - Class: 115
   Script: {instanceID: 0}
 SerializeReferenceClassIdentifiers:
-- AssemblyName: Assembly-CSharp
-  ClassName: BundleInfo
+- AssemblyName: EdenMeng.AssetManager
+  ClassName: EdenMeng.AssetManager.BundleInfo
 Assets:
 - Assets/BundlesInfo.asset
 Dependencies: []
