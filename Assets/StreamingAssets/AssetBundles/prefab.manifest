@@ -28,4 +28,4 @@ Assets:
 - Assets/Prefabs/Cube3.prefab
 - Assets/Prefabs/Folder/Cube.prefab
 Dependencies:
-- E:/UnityProject/AssetManager/Assets/AssetBundles/prefab2
+- E:/UnityProject/AssetManager/Assets/StreamingAssets/AssetBundles/prefab2

@@ -13,16 +13,41 @@ public class TestAsyncLoad : MonoBehaviour
 
     public void Start()
     {
+        // TestAsyncLoadAssetMultipleTimes(LoadTimes);
+        TestAsyncAndSyncLoadAsset();
+        // TestAsyncLoadAndUnloadImmediatelly();
+        // TestAsyncAndSyncLoad();
+    }
+
+    public void TestAsyncLoadAssetMultipleTimes(int times)
+    {
         for (int i = 0; i < LoadTimes; i++)
         {
             int index = i;
-            float time1 = Time.realtimeSinceStartup;
-            Debug.Log($"Load Start {index}    {time1}");
-            StartCoroutine(AssetManager.LoadAssetAsync<GameObject>("Assets/Cube2.prefab", (objCube) =>
-            {
-                float time2 = Time.realtimeSinceStartup;
-                Debug.Log($"Load End {index}    {time2}, offset {time2-time1}");
-            }));
+            StartCoroutine(AssetManager.LoadAssetAsync<GameObject>("Assets/Cube2.prefab", null));
         }
+    }
+
+    public void TestAsyncAndSyncLoadAsset()
+    {
+        StartCoroutine(AssetManager.LoadAssetAsync<GameObject>("Assets/Cube2.prefab", (gameObject) =>
+        {
+            AssetManager.UnloadAsset(gameObject);
+        }));
+        var obj2 = AssetManager.LoadAsset<GameObject>("Assets/Cube2.prefab");
+        AssetManager.UnloadAsset(obj2);
+    }
+
+    public void TestAsyncLoadAndUnloadBundleImmediatelly()
+    {
+        StartCoroutine(AssetBundleManager.LoadBundleAndDependenciesAsync("prefab2", null));
+        AssetBundleManager.UnloadBundleAndDependencies("prefab2");
+        AssetBundleManager.LogAllLoadedBundle();
+    }
+
+    public void TestAsyncAndSyncLoadBundle()
+    {
+        StartCoroutine(AssetBundleManager.LoadBundleAndDependenciesAsync("prefab2", null));
+        AssetBundleManager.LoadBundleAndDependencies("prefab2");
     }
 }

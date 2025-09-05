@@ -27,4 +27,4 @@ SerializeReferenceClassIdentifiers: []
 Assets:
 - Assets/Cube2.prefab
 Dependencies:
-- E:/UnityProject/AssetManager/Assets/AssetBundles/material
+- E:/UnityProject/AssetManager/Assets/StreamingAssets/AssetBundles/material

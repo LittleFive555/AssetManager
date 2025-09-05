@@ -19,4 +19,4 @@ SerializeReferenceClassIdentifiers: []
 Assets:
 - Assets/Material/New Material.mat
 Dependencies:
-- E:/UnityProject/AssetManager/Assets/AssetBundles/texture
+- E:/UnityProject/AssetManager/Assets/StreamingAssets/AssetBundles/texture
